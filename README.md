@@ -1,4 +1,4 @@
-This application has the objective to scan all WiFi networks in your PC range, listing: SSID, Signal and MAC Address. Further more, the application also append those informations into an existent .csv file or create a new one if inexistent.
+This application aims to scan all WiFi networks in your PC range, listing: SSID, Signal and MAC Address. Furthermore, the application also appends those informations into an existent .csv file or creates a new one if inexistent.
 
 To run it:
     
