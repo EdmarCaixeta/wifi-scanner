@@ -1,6 +1,8 @@
+#TODO: argument parser with the option to not export the data; list rooms to IA project
 import pandas as pd
 
 from os.path import exists
+from os import getcwd
 from wifi import Cell, Scheme
 from get_nic import getnic
 
@@ -14,11 +16,11 @@ def output_operation(data_frame: pd.DataFrame) -> bool:
     param data_frame: an existent pandas.DataFrame
     Returns True if output file exists.
     """
-    if exists("./output.csv"):
-        data_frame.to_csv("output.csv", mode='a')
+    if exists("/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv"):
+        data_frame.to_csv(r"/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv", mode='a')
         return True
     else:
-        data_frame.to_csv("output.csv", mode='w') 
+        data_frame.to_csv(r"/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv", mode='w') 
         return False
 
 def df_creation(ssid: list, signal: list, mac:list) -> pd.DataFrame:
@@ -54,7 +56,7 @@ if __name__ == "__main__":
             mac_address.append(network.address)
             dbm_signal.append(str(network.signal) + "dB")
     
-    df = df_creation(ssid, mac_address, dbm_signal)
-    print("WiFi status appended to output.csv file located at program folder") if output_operation else print("Output.csv file created at program folder")
+    df = df_creation(ssid, dbm_signal, mac_address)
+    print("WiFi status appended to output.csv file located at program folder") if output_operation(df) else print("output.csv file created at program folder")
                
     print(df)
