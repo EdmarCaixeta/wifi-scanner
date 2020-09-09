@@ -16,11 +16,11 @@ def output_operation(data_frame: pd.DataFrame) -> bool:
     param data_frame: an existent pandas.DataFrame
     Returns True if output file exists.
     """
-    if exists("/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv"):
-        data_frame.to_csv(r"/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv", mode='a')
+    if exists("./output.csv"):
+        data_frame.to_csv("./output.csv", mode='a')
         return True
     else:
-        data_frame.to_csv(r"/home/edmarcaixeta/Documentos/repos/wifi_reporter/output.csv", mode='w') 
+        data_frame.to_csv("./output.csv", mode='w') 
         return False
 
 def df_creation(ssid: list, signal: list, mac:list) -> pd.DataFrame:
