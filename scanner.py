@@ -1,6 +1,6 @@
-#TODO: argument parser with the option to not export the data; list rooms to IA project
 import pandas as pd
 
+from argparse import ArgumentParser
 from os.path import exists
 from os import getcwd
 from wifi import Cell, Scheme
@@ -9,6 +9,13 @@ from get_nic import getnic
 ssid = []
 mac_address = []
 dbm_signal = []
+
+def make_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("--store", help="save results in a .csv file either existent or not",
+                        action="store_true")
+    return parser
+
 
 def output_operation(data_frame: pd.DataFrame) -> bool:
     """
@@ -36,6 +43,9 @@ def df_creation(ssid: list, signal: list, mac:list) -> pd.DataFrame:
     return data_frame
 
 if __name__ == "__main__":
+    parser = make_parser()
+    args = parser.parse_args()
+
     try:
         #Getnic.interfaces()[2] usually returns the correct interface, but you can change it if not works for you
         interface = str(getnic.interfaces()[2])
@@ -57,6 +67,8 @@ if __name__ == "__main__":
             dbm_signal.append(str(network.signal) + "dB")
     
     df = df_creation(ssid, dbm_signal, mac_address)
-    print("WiFi status appended to output.csv file located at program folder") if output_operation(df) else print("output.csv file created at program folder")
+
+    if args.store:
+        print("WiFi status appended to output.csv file located at program folder") if output_operation(df) else print("Output.csv file created at program folder")
                
     print(df)
